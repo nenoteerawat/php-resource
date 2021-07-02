@@ -12,9 +12,9 @@ Createe a s3 bucket and dynamodb table to use as terraform backend.
 pip install awscli
 aws s3 ls
 
-# If you don't set default region in your aws configuration, and you want to create the resources in region "us-east-1"
-export AWS_DEFAULT_REGION=us-east-1
-export AWS_REGION=us-east-1
+# If you don't set default region in your aws configuration, and you want to create the resources in region "ap-southeast-1"
+export AWS_DEFAULT_REGION=ap-southeast-1
+export AWS_REGION=ap-southeast-1
 
 # Dry-run
 terraform init

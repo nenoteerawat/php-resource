@@ -16,9 +16,7 @@ terraform {
 # CONFIGURE OUR AWS CONNECTION
 # ------------------------------------------------------------------------------
 
-provider "aws" {
-  region = "ap-southeast-1"
-}
+provider "aws" {}
 
 # ------------------------------------------------------------------------------
 # CREATE THE S3 BUCKET
@@ -27,7 +25,7 @@ provider "aws" {
 data "aws_caller_identity" "current" {}
 
 locals {
-  account_id    = data.aws_caller_identity.current.account_id
+  account_id = data.aws_caller_identity.current.account_id
 }
 
 resource "aws_s3_bucket" "terraform_state" {
