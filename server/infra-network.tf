@@ -1,15 +1,3 @@
-variable "name" {
-  type = string
-}
-
-resource "aws_instance" "module_ec2" {
-  ami           = "ami-018c1c51c7a13e363"
-  instance_type = "t2.micro"
-  tags = {
-    name = "${var.name}_server"
-  }
-}
-
 resource "aws_vpc" "module_vpc" {
   cidr_block       = "10.0.0.0/16"
   instance_tenancy = "default"
@@ -47,21 +35,30 @@ resource "aws_security_group" "module_secure_group" {
 }
 
 resource "aws_subnet" "module_subnet" {
-  vpc_id     = aws_vpc.module_vpc.id
-  cidr_block = cidrsubnet(aws_vpc.module_vpc.cidr_block, 4, 1)
-
+  vpc_id            = aws_vpc.module_vpc.id
+  cidr_block        = cidrsubnet(aws_vpc.module_vpc.cidr_block, 8, 1)
+  availability_zone = "ap-southeast-1a"
   tags = {
     name = "${var.name}_subnet"
   }
 }
 
-resource "aws_internet_gateway" "module_gateway" {
-  vpc_id = aws_vpc.module_vpc.id
-
+resource "aws_subnet" "module_subnet_second" {
+  vpc_id            = aws_vpc.module_vpc.id
+  cidr_block        = cidrsubnet(aws_vpc.module_vpc.cidr_block, 8, 2)
+  availability_zone = "ap-southeast-1b"
   tags = {
-    name = "${var.name}_gateway"
+    name = "${var.name}_subnet_second"
   }
 }
+
+# resource "aws_internet_gateway" "module_gateway" {
+#   vpc_id = aws_vpc.module_vpc.id
+
+#   tags = {
+#     name = "${var.name}_gateway"
+#   }
+# }
 
 resource "aws_route_table" "module_route_table" {
   vpc_id = aws_vpc.module_vpc.id

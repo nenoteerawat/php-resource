@@ -16,7 +16,9 @@ terraform {
 # CONFIGURE OUR AWS CONNECTION
 # ------------------------------------------------------------------------------
 
-provider "aws" {}
+provider "aws" {
+  region = var.region
+}
 
 # ------------------------------------------------------------------------------
 # CREATE THE S3 BUCKET
