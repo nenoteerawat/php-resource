@@ -25,3 +25,12 @@ If you encountered with issues. Run this command
 ``` shell
 pre-commit clean
 ```
+
+## Terraform Run
+
+``` shell
+terraform get -update=true
+terraform init -backend-config=config/backend.conf
+terraform plan -var-file=config/dev.tfvars
+terraform apply -var-file=config/dev.tfvars
+```
