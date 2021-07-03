@@ -14,6 +14,9 @@ module "php_server" {
   name   = var.name
   region = var.region
 
+  key_name_ec2_frontend = var.key_name_ec2_frontend
+  login_user_ec2        = var.login_user_ec2
+
   db_engine_name       = var.db_engine_name
   db_engine_version    = var.db_engine_version
   db_port              = var.db_port

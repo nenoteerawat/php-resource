@@ -13,6 +13,15 @@ resource "aws_security_group" "module_secure_group" {
   vpc_id      = aws_vpc.module_vpc.id
 
   ingress {
+    description      = "SSH"
+    from_port        = 22
+    to_port          = 22
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
+  ingress {
     description = "TLS from VPC"
     from_port   = 443
     to_port     = 443
@@ -52,20 +61,27 @@ resource "aws_subnet" "module_subnet_second" {
   }
 }
 
-# resource "aws_internet_gateway" "module_gateway" {
-#   vpc_id = aws_vpc.module_vpc.id
+resource "aws_internet_gateway" "module_gateway" {
+  vpc_id = aws_vpc.module_vpc.id
 
-#   tags = {
-#     name = "${var.name}_gateway"
-#   }
-# }
+  tags = {
+    name = "${var.name}_gateway"
+  }
+}
 
 resource "aws_route_table" "module_route_table" {
   vpc_id = aws_vpc.module_vpc.id
 
-  route = []
-
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.module_gateway.id
+  }
   tags = {
     name = "${var.name}_route_table"
   }
+}
+
+resource "aws_route_table_association" "subnet_association" {
+  subnet_id      = aws_subnet.module_subnet.id
+  route_table_id = aws_route_table.module_route_table.id
 }

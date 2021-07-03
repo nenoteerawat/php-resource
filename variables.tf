@@ -6,6 +6,15 @@ variable "name" {
   type = string
 }
 
+variable "login_user_ec2" {
+  type = string
+}
+
+variable "key_name_ec2_frontend" {
+  description = "Key name of the ec2 frontend"
+  type        = string
+}
+
 variable "db_username" {
   description = "Master username of the DB"
   type        = string

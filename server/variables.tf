@@ -1,6 +1,9 @@
 variable "region" {}
 variable "name" {}
 
+variable "login_user_ec2" {}
+variable "key_name_ec2_frontend" {}
+
 variable "db_username" {}
 variable "db_password" {}
 variable "db_database_name" {}
