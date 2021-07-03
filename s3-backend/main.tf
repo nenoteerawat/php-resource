@@ -16,10 +16,6 @@ terraform {
 # CONFIGURE OUR AWS CONNECTION
 # ------------------------------------------------------------------------------
 
-variable "region" {
-  type = string
-}
-
 provider "aws" {
   region = var.region
 }
@@ -65,7 +61,7 @@ resource "aws_s3_bucket" "terraform_state" {
 # ------------------------------------------------------------------------------
 
 resource "aws_dynamodb_table" "terraform_lock" {
-  name         = "terraform-lock"
+  name         = var.lockingDbname
   billing_mode = "PAY_PER_REQUEST"
   hash_key     = "LockID"
 
