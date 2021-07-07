@@ -40,3 +40,14 @@ terraform apply -var-file=config/dev.tfvars
 ``` shell
 ssh-keygen -t rsa -q -f {key-name} -N ''
 ```
+
+## RDS MYSQL
+```
+    mysql -h php-service.cmw6el8utq3k.ap-southeast-1.rds.amazonaws.com -P 3306 -u admin -p
+```
+
+## Info
+```
+frontend: http://ec2-13-213-187-49.ap-southeast-1.compute.amazonaws.com/
+backend:  http://ec2-46-137-244-237.ap-southeast-1.compute.amazonaws.com/
+```

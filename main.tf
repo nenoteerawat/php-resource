@@ -32,6 +32,6 @@ module "php_server" {
   db_instance_class         = var.db_instance_class
   db_allocated_storage      = var.db_allocated_storage
   db_license_model          = var.db_license_model
+  db_family                 = var.db_family
   iam_instance_profile_name = module.module_usermanagement.instance_connect_name
-
 }

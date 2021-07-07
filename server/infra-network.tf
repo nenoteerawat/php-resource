@@ -14,6 +14,15 @@ resource "aws_security_group" "module_secure_group" {
   vpc_id      = aws_vpc.module_vpc.id
 
   ingress {
+    description = "Mysql from VPC"
+    from_port   = 3306
+    to_port     = 3306
+    protocol    = "tcp"
+    cidr_blocks = [aws_vpc.module_vpc.cidr_block]
+    # ipv6_cidr_blocks = [aws_vpc.module_vpc.ipv6_cidr_block]
+  }
+
+  ingress {
     description      = "SSH"
     from_port        = 22
     to_port          = 22
@@ -45,6 +54,10 @@ resource "aws_security_group" "module_secure_group" {
     protocol         = "-1"
     cidr_blocks      = ["0.0.0.0/0"]
     ipv6_cidr_blocks = ["::/0"]
+  }
+
+  lifecycle {
+    create_before_destroy = true
   }
 
   tags = {
@@ -92,5 +105,10 @@ resource "aws_route_table" "module_route_table" {
 
 resource "aws_route_table_association" "subnet_association" {
   subnet_id      = aws_subnet.module_subnet.id
+  route_table_id = aws_route_table.module_route_table.id
+}
+
+resource "aws_route_table_association" "subnet_second_association" {
+  subnet_id      = aws_subnet.module_subnet_second.id
   route_table_id = aws_route_table.module_route_table.id
 }

@@ -36,8 +36,10 @@ resource "null_resource" "module_frontend_provisioner" {
   provisioner "remote-exec" { # Install apache, mysql client, php
     inline = [
       "sudo yum update -y",
+      "sudo yum install php -y",
       "sudo amazon-linux-extras install -y lamp-mariadb10.2-php7.2 php7.2",
-      "sudo yum install -y httpd mariadb-server",
+      "sudo yum install -y httpd",
+      "sudo yum install telnet telnet-server -y",
       "sudo systemctl start httpd",
       "sudo systemctl enable httpd",
       "sudo usermod -a -G apache ${var.login_user_ec2}",
@@ -98,8 +100,10 @@ resource "null_resource" "module_backend_provisioner" {
   provisioner "remote-exec" { # Install apache, mysql client, php
     inline = [
       "sudo yum update -y",
+      "sudo yum install php -y",
       "sudo amazon-linux-extras install -y lamp-mariadb10.2-php7.2 php7.2",
-      "sudo yum install -y httpd mariadb-server",
+      "sudo yum install -y httpd",
+      "sudo yum install telnet telnet-server -y",
       "sudo systemctl start httpd",
       "sudo systemctl enable httpd",
       "sudo usermod -a -G apache ${var.login_user_ec2}",
