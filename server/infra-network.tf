@@ -1,9 +1,10 @@
 resource "aws_vpc" "module_vpc" {
-  cidr_block       = "10.0.0.0/16"
-  instance_tenancy = "default"
+  cidr_block           = "10.0.0.0/16"
+  instance_tenancy     = "default"
+  enable_dns_hostnames = true
 
   tags = {
-    name = "${var.name}_vpc"
+    Name = "${var.name}_vpc"
   }
 }
 
@@ -29,6 +30,14 @@ resource "aws_security_group" "module_secure_group" {
     cidr_blocks = [aws_vpc.module_vpc.cidr_block]
     # ipv6_cidr_blocks = [aws_vpc.module_vpc.ipv6_cidr_block]
   }
+  ingress {
+    description      = "Http for webpage index"
+    from_port        = 80
+    to_port          = 80
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
 
   egress {
     from_port        = 0
@@ -39,7 +48,7 @@ resource "aws_security_group" "module_secure_group" {
   }
 
   tags = {
-    name = "${var.name}_secure_group"
+    Name = "${var.name}_secure_group"
   }
 }
 
@@ -48,7 +57,7 @@ resource "aws_subnet" "module_subnet" {
   cidr_block        = cidrsubnet(aws_vpc.module_vpc.cidr_block, 8, 1)
   availability_zone = "ap-southeast-1a"
   tags = {
-    name = "${var.name}_subnet"
+    Name = "${var.name}_subnet"
   }
 }
 
@@ -57,7 +66,7 @@ resource "aws_subnet" "module_subnet_second" {
   cidr_block        = cidrsubnet(aws_vpc.module_vpc.cidr_block, 8, 2)
   availability_zone = "ap-southeast-1b"
   tags = {
-    name = "${var.name}_subnet_second"
+    Name = "${var.name}_subnet_second"
   }
 }
 
@@ -65,7 +74,7 @@ resource "aws_internet_gateway" "module_gateway" {
   vpc_id = aws_vpc.module_vpc.id
 
   tags = {
-    name = "${var.name}_gateway"
+    Name = "${var.name}_gateway"
   }
 }
 
@@ -77,7 +86,7 @@ resource "aws_route_table" "module_route_table" {
     gateway_id = aws_internet_gateway.module_gateway.id
   }
   tags = {
-    name = "${var.name}_route_table"
+    Name = "${var.name}_route_table"
   }
 }
 

@@ -28,6 +28,6 @@ resource "aws_iam_policy" "instance_connect" {
 EOF
 }
 
-data "aws_iam_instance_profile" "instance_connect" {
-  name = "instance-connect"
-}
+# data "aws_iam_instance_profile" "instance_connect" {
+#   name = "instance-connect"
+# }

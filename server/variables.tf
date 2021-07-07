@@ -15,3 +15,4 @@ variable "db_engine_version" {}
 variable "db_allocated_storage" {}
 variable "db_license_model" {}
 variable "db_instance_class" {}
+variable "iam_instance_profile_name" {}
