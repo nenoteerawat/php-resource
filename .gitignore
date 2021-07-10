@@ -34,5 +34,5 @@ override.tf.json
 terraform.rc
 
 application/**
-
 application-bak/**
+__MACOSX/**
