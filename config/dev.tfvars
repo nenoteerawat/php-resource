@@ -9,4 +9,4 @@ db_allocated_storage = "5"
 db_username          = "admin"
 db_password          = "password"
 # DBName must begin with a letter and contain only alphanumeric characters.
-db_database_name = "botdev"
+db_database_name = "botman"

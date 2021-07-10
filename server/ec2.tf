@@ -36,8 +36,11 @@ resource "null_resource" "module_frontend_provisioner" {
   provisioner "remote-exec" { # Install apache, mysql client, php
     inline = [
       "sudo yum update -y",
+      "sudo yum install unzip -y",
       "sudo yum install php -y",
-      "sudo amazon-linux-extras install -y lamp-mariadb10.2-php7.2 php7.2",
+      # "sudo amazon-linux-extras install -y lamp-mariadb10.2-php7.2 php7.2",
+      "sudo amazon-linux-extras enable php7.4",
+      "sudo yum install php-cli php-pdo php-fpm php-json php-mysqlnd -y",
       "sudo yum install -y httpd",
       "sudo yum install telnet telnet-server -y",
       "sudo systemctl start httpd",
@@ -50,7 +53,7 @@ resource "null_resource" "module_frontend_provisioner" {
   }
 
   provisioner "file" { # Copy the index file form local to remote
-    source      = "src"
+    source      = "src/botman-web"
     destination = "/tmp/src"
   }
 
@@ -59,7 +62,6 @@ resource "null_resource" "module_frontend_provisioner" {
       "sudo mv /tmp/src/* /var/www/html/",
     ]
   }
-
 }
 
 resource "aws_instance" "module_ec2_backend" {
@@ -100,8 +102,11 @@ resource "null_resource" "module_backend_provisioner" {
   provisioner "remote-exec" { # Install apache, mysql client, php
     inline = [
       "sudo yum update -y",
+      "sudo yum install unzip -y",
       "sudo yum install php -y",
-      "sudo amazon-linux-extras install -y lamp-mariadb10.2-php7.2 php7.2",
+      "sudo amazon-linux-extras install -y",
+      "sudo amazon-linux-extras enable php7.4",
+      "sudo yum install php-cli php-pdo php-fpm php-json php-mysqlnd -y",
       "sudo yum install -y httpd",
       "sudo yum install telnet telnet-server -y",
       "sudo systemctl start httpd",
@@ -114,7 +119,7 @@ resource "null_resource" "module_backend_provisioner" {
   }
 
   provisioner "file" { # Copy the index file form local to remote
-    source      = "src"
+    source      = "src/botman-engine"
     destination = "/tmp/src"
   }
 
@@ -123,7 +128,6 @@ resource "null_resource" "module_backend_provisioner" {
       "sudo mv /tmp/src/* /var/www/html/",
     ]
   }
-
 }
 
 resource "aws_key_pair" "module_key_pair_ec_frontend" {

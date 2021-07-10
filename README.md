@@ -44,6 +44,10 @@ ssh-keygen -t rsa -q -f {key-name} -N ''
 ## RDS MYSQL
 ```
     mysql -h php-service.cmw6el8utq3k.ap-southeast-1.rds.amazonaws.com -P 3306 -u admin -p
+
+    mysql> create database mydb;
+    mysql> use mydb;
+    mysql> source db_backup.dump;
 ```
 
 ## Info
