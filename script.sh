@@ -30,15 +30,28 @@ deploy_process() {
     local IP=$2
     local APP_NAME=$3
     local APP_ZIP_PATH=$4
+    local DOCUMENT_ROOT=/var/www
+    local BACKUP_PATH=/var/www/backup
+
     scp -i "${EC2_KEY}" -r ${APP_ZIP_PATH} ${USER}@${IP}:/tmp/src
     ssh -i "${EC2_KEY}" ${USER}@${IP} "
         unzip -o /tmp/src/${APP_NAME}.zip -d /tmp/src
-        rm -rf /var/www/backup/*
-        mkdir -p /var/www/backup && cp -r /var/www/html/ /var/www/backup/
-        rm -rf /var/www/html/*
-        mv /tmp/src/${APP_NAME}/* /var/www/html/
+        rm -rf ${BACKUP_PATH}
+        mkdir -p ${BACKUP_PATH} && cp -r ${DOCUMENT_ROOT}/${APP_NAME} ${BACKUP_PATH}/
+        rm -rf ${DOCUMENT_ROOT}/${APP_NAME}
+        mv /tmp/src/${APP_NAME} ${DOCUMENT_ROOT}
         rm -rf /tmp/src/*
+        cd /var/www/${APP_NAME}
+        composer update
+        php artisan key:generate
+        php artisan config:clear
+        php artisan config:cache
+        php artisan route:clear
+        php artisan view:cache
+        php artisan up
+        sudo chmod -R 755 ${DOCUMENT_ROOT}/${APP_NAME}/storage/
     "
+    # php artisan auth:clear-resets
 }
 
 ## main

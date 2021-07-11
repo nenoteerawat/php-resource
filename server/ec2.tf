@@ -49,6 +49,13 @@ resource "null_resource" "module_frontend_provisioner" {
       "sudo chown -R ec2-user:apache /var/www",
       "sudo chmod 2775 /var/www && find /var/www -type d -exec sudo chmod 2775 {} \\;",
       "find /var/www -type f -exec sudo chmod 0664 {} \\;",
+      "sudo yum install php-mbstring -y",
+      "sudo yum install php-xml -y",
+      "php -r \"copy('https://getcomposer.org/installer', 'composer-setup.php');\"",
+      "php -r \"if (hash_file('sha384', 'composer-setup.php') === '756890a4488ce9024fc62c56153228907f1545c228516cbf63f885e036d37e9a59d27d63f46af1d4d07ee0f76181c7d3') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;\"",
+      "php composer-setup.php",
+      "php -r \"unlink('composer-setup.php');\"",
+      "sudo mv composer.phar /usr/local/bin/composer",
     ]
   }
 
@@ -115,6 +122,13 @@ resource "null_resource" "module_backend_provisioner" {
       "sudo chown -R ec2-user:apache /var/www",
       "sudo chmod 2775 /var/www && find /var/www -type d -exec sudo chmod 2775 {} \\;",
       "find /var/www -type f -exec sudo chmod 0664 {} \\;",
+      "sudo yum install php-mbstring -y",
+      "sudo yum install php-xml -y",
+      "php -r \"copy('https://getcomposer.org/installer', 'composer-setup.php');\"",
+      "php -r \"if (hash_file('sha384', 'composer-setup.php') === '756890a4488ce9024fc62c56153228907f1545c228516cbf63f885e036d37e9a59d27d63f46af1d4d07ee0f76181c7d3') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;\"",
+      "php composer-setup.php",
+      "php -r \"unlink('composer-setup.php');\"",
+      "sudo mv composer.phar /usr/local/bin/composer",
     ]
   }
 
