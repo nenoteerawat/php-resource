@@ -64,4 +64,11 @@ php -r "unlink('composer-setup.php');"
 
 php composer.phar install
 php composer.phar update
+
+SSL
+# openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout botman-web-selfsigned.key -out botman-web-selfsigned.crt
+
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/apache-selfsigned.key -out /etc/ssl/certs/apache-selfsigned.crt
+openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
+cat /etc/ssl/certs/dhparam.pem | sudo tee -a /etc/ssl/certs/apache-selfsigned.crt
 ```
