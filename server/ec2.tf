@@ -57,6 +57,7 @@ resource "null_resource" "module_frontend_provisioner" {
       "php composer-setup.php",
       "php -r \"unlink('composer-setup.php');\"",
       "sudo mv composer.phar /usr/local/bin/composer",
+      "mkdir -p /etc/httpd/ssl",
     ]
   }
 
@@ -131,6 +132,7 @@ resource "null_resource" "module_backend_provisioner" {
       "php composer-setup.php",
       "php -r \"unlink('composer-setup.php');\"",
       "sudo mv composer.phar /usr/local/bin/composer",
+      "mkdir -p /etc/httpd/ssl",
     ]
   }
 
