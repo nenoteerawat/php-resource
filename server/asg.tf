@@ -1,40 +1,3 @@
-# resource "aws_elb" "mudule_frontend_elb" {
-#   subnets = [ aws_subnet.module_subnet.id, aws_subnet.module_subnet_second.id ]
-#   security_groups = [aws_security_group.module_secure_group.id]
-
-#   listener {
-#     instance_port     = 80
-#     instance_protocol = "http"
-#     lb_port           = 80
-#     lb_protocol       = "http"
-#   }
-
-#   listener {
-#     instance_port      = 80
-#     instance_protocol  = "http"
-#     lb_port            = 443
-#     lb_protocol        = "https"
-#     ssl_certificate_id = "arn:aws:acm:ap-southeast-1:991527546109:certificate/ef432fb7-39ab-4d68-aea7-152b832dab7d"
-#   }
-
-#   health_check {
-#     healthy_threshold   = 2
-#     unhealthy_threshold = 2
-#     timeout             = 3
-#     target              = "HTTP:80/"
-#     interval            = 30
-#   }
-
-#   cross_zone_load_balancing   = true
-#   idle_timeout                = 400
-#   connection_draining         = true
-#   connection_draining_timeout = 400
-
-#   tags = {
-#     Name = var.name
-#   }
-# }
-
 resource "aws_lb" "mudule_frontend_lb" {
   name               = "${var.name}-frontend-lb"
   internal           = false
@@ -112,12 +75,6 @@ resource "aws_autoscaling_group" "mudule_frontend_as_group" {
     version = "$Latest"
   }
 }
-
-# resource "aws_autoscaling_attachment" "module_frontend_asg_attachment" {
-#   autoscaling_group_name = aws_autoscaling_group.mudule_frontend_as_group.id
-#   # elb                    = aws_elb.mudule_frontend_elb.id
-#   alb_target_group_arn = aws_lb_target_group.mudule_frontend_lb_tg.arn
-# }
 
 resource "aws_key_pair" "module_key_pair_ec_frontend" {
   key_name   = var.key_name_ec2_frontend
