@@ -4,7 +4,7 @@ resource "aws_vpc" "module_vpc" {
   enable_dns_hostnames = true
 
   tags = {
-    Name = "${var.name}_vpc"
+    Name = var.name
   }
 }
 
@@ -61,7 +61,7 @@ resource "aws_security_group" "module_secure_group" {
   }
 
   tags = {
-    Name = "${var.name}_secure_group"
+    Name = var.name
   }
 }
 
@@ -70,7 +70,7 @@ resource "aws_subnet" "module_subnet" {
   cidr_block        = cidrsubnet(aws_vpc.module_vpc.cidr_block, 8, 1)
   availability_zone = "ap-southeast-1a"
   tags = {
-    Name = "${var.name}_subnet"
+    Name = var.name
   }
 }
 
@@ -79,7 +79,7 @@ resource "aws_subnet" "module_subnet_second" {
   cidr_block        = cidrsubnet(aws_vpc.module_vpc.cidr_block, 8, 2)
   availability_zone = "ap-southeast-1b"
   tags = {
-    Name = "${var.name}_subnet_second"
+    Name = var.name
   }
 }
 
@@ -87,7 +87,15 @@ resource "aws_internet_gateway" "module_gateway" {
   vpc_id = aws_vpc.module_vpc.id
 
   tags = {
-    Name = "${var.name}_gateway"
+    Name = var.name
+  }
+}
+
+resource "aws_eip" "module_eip" {
+  vpc        = true
+  depends_on = [aws_internet_gateway.module_gateway]
+  tags = {
+    "Name" = var.name
   }
 }
 
@@ -99,7 +107,7 @@ resource "aws_route_table" "module_route_table" {
     gateway_id = aws_internet_gateway.module_gateway.id
   }
   tags = {
-    Name = "${var.name}_route_table"
+    Name = var.name
   }
 }
 
