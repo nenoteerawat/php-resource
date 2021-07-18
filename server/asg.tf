@@ -3,7 +3,7 @@ resource "aws_lb" "mudule_frontend_lb" {
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.module_secure_group.id]
-  subnets            = [aws_subnet.module_subnet.id, aws_subnet.module_subnet_second.id]
+  subnets            = aws_subnet.module_private_subnet.*.id
 
   # enable_deletion_protection = true
 
@@ -60,11 +60,10 @@ resource "aws_launch_template" "module_frontend_lt" {
 
 resource "aws_autoscaling_group" "mudule_frontend_as_group" {
   name                = "${var.name}_frontend_as_group"
-  min_size            = 1
-  max_size            = 2
-  vpc_zone_identifier = [aws_subnet.module_subnet.id, aws_subnet.module_subnet_second.id]
+  min_size            = 3
+  max_size            = 6
+  vpc_zone_identifier = aws_subnet.module_private_subnet.*.id
 
-  # load_balancers = [aws_elb.mudule_frontend_elb.name]
   target_group_arns = [aws_lb_target_group.mudule_frontend_lb_tg.arn]
 
   lifecycle {
