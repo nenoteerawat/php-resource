@@ -26,3 +26,11 @@ php -r "unlink('composer-setup.php');"
 sudo mv composer.phar /usr/local/bin/composer
 mkdir -p /etc/httpd/ssl
 echo "<?php phpinfo(); ?>" > /var/www/html/index.php
+
+sudo yum update
+sudo yum install -y ruby
+sudo yum install -y wget
+cd /home/ec2-user
+wget https://aws-codedeploy-ap-southeast-1.s3.ap-southeast-1.amazonaws.com/latest/install
+chmod +x ./install
+sudo ./install auto

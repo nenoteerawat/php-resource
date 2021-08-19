@@ -11,6 +11,7 @@ variable "instance_type" {
 
 variable "login_user_ec2" {}
 variable "key_name_ec2_frontend" {}
+variable "key_name_ec2_backend" {}
 
 variable "db_username" {}
 variable "db_password" {}
