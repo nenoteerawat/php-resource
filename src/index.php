@@ -1,1 +1,12 @@
-<?php phpinfo(); ?>
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>My Second PHP page</h1>
+
+<?php
+echo "Hello World 2!";
+?>
+
+</body>
+</html>

@@ -25,6 +25,7 @@ module "php_server" {
   region = var.region
 
   key_name_ec2_frontend = var.key_name_ec2_frontend
+  key_name_ec2_backend  = var.key_name_ec2_backend
   login_user_ec2        = var.login_user_ec2
 
   db_engine_name                = var.db_engine_name
