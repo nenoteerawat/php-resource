@@ -25,3 +25,5 @@ variable "db_allocated_storage" {}
 variable "db_license_model" {}
 variable "db_instance_class" {}
 variable "iam_instance_profile_name" {}
+variable "route53_zone_botman_web_id" {}
+variable "route53_zone_botman_engine_id" {}
