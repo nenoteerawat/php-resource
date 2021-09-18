@@ -5,7 +5,7 @@ login_user_ec2        = "ec2-user"
 key_name_ec2_frontend = "key-php-service-frontend"
 key_name_ec2_backend  = "key-php-service-backend"
 db_instance_class     = "db.t2.micro"
-db_allocated_storage  = "5"
+db_allocated_storage  = "50"
 db_username           = "admin"
 db_password           = "password"
 # DBName must begin with a letter and contain only alphanumeric characters.
