@@ -2,9 +2,11 @@ version: 0.0
 os: linux
 files:
    - source: /
-     destination: /var/www/html
+     destination: /var/www/html/
+   - source: /httpd.config/
+     destination: /etc/httpd/conf.d/
 permissions:
-   - object: /var/www/html
+   - object: /var/www/html/
      pattern: "**"
      owner: ec2-user
      group: apache

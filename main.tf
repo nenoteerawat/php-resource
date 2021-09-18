@@ -28,17 +28,24 @@ module "php_server" {
   key_name_ec2_backend  = var.key_name_ec2_backend
   login_user_ec2        = var.login_user_ec2
 
-  db_engine_name                = var.db_engine_name
-  db_engine_version             = var.db_engine_version
-  db_port                       = var.db_port
-  db_database_name              = var.db_database_name
-  db_username                   = var.db_username
-  db_password                   = var.db_password
-  db_instance_class             = var.db_instance_class
-  db_allocated_storage          = var.db_allocated_storage
-  db_license_model              = var.db_license_model
-  db_family                     = var.db_family
   iam_instance_profile_name     = module.module_usermanagement.instance_connect_name
   route53_zone_botman_web_id    = module.module_dns.route53_zone_botman_web_id
   route53_zone_botman_engine_id = module.module_dns.route53_zone_botman_engine_id
+}
+
+module "module_db" {
+  source               = "./db"
+  name                 = var.name
+  db_engine_name       = var.db_engine_name
+  db_engine_version    = var.db_engine_version
+  db_port              = var.db_port
+  db_database_name     = var.db_database_name
+  db_username          = var.db_username
+  db_password          = var.db_password
+  db_instance_class    = var.db_instance_class
+  db_allocated_storage = var.db_allocated_storage
+  db_license_model     = var.db_license_model
+  db_family            = var.db_family
+  db_subnet_ids        = module.php_server.subnet_ids
+  vpc_id               = module.php_server.vpc_id
 }
